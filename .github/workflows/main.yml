@@ -1,31 +1,33 @@
+
+
 name: Test error 5th repo - First workflow
+
 on:
   push:
     branches:
       - main
-  pull_request:
-  workflow_dispatch:
 
 jobs:
-  setup-go:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: /home/runner/go/pkg/mod
-          key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version-file: 'go.mod'
-          check-latest: true
-          cache: true
-      - name: go version
-        run: go version
-      - name: Run app
-        run: go run ./main.go
+    - name: Clear existing files
+      run: rm -rf /home/runner/work/setup_go_424_test5/setup_go_424_test5/*
 
+    - name: Restore cache
+      uses: actions/cache@v4
+      with:
+        path: /home/runner/go/pkg/mod
+        key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 'go.mod'
+
+    - name: Build
+      run: go build ./...
