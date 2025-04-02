@@ -12,17 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Clear existing files
-        run: rm -rf /home/runner/work/setup_go_424_test5/setup_go_424_test5/*
-      - name: Restore cache
-        uses: actions/cache@v3
-        with:
-          path: /home/runner/go/pkg/mod
-          key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}  
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: 'src/go.mod'  # Update this path if go.mod is in a subdirectory
+          go-version-file: 'go.mod'
           check-latest: true
           cache: true
       - name: go version
