@@ -16,8 +16,8 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v2
         with:
-        path: /home/runner/go/pkg/mod
-        key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
+          path: /home/runner/go/pkg/mod
+          key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
