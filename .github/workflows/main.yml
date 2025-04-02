@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+        path: /home/runner/go/pkg/mod
+        key: setup-go-${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -22,3 +28,4 @@ jobs:
         run: go version
       - name: Run app
         run: go run ./main.go
+
