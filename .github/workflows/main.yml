@@ -22,7 +22,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: 'go.mod'
+          go-version-file: 'src/go.mod'  # Update this path if go.mod is in a subdirectory
           check-latest: true
           cache: true
       - name: go version
