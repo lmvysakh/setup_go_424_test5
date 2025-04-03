@@ -19,7 +19,7 @@ jobs:
           check-latest: true
           cache: false
 
-      # - name: Set permissions
+      # - name: Set permissions 
       #   run: sudo chmod -R 777 /home/runner/go/pkg/mod
 
       # - name: Pre-clean cache directory
