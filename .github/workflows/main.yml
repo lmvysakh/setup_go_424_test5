@@ -18,6 +18,41 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: true
           cache: true
+
+      - name: Cache Go Modules
+        id: cache-go-mod
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-mod-
+
+      - name: Cache Go Build
+        id: cache-go-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-build-${{ hashFiles('**/*.go') }}
+          restore-keys: |
+            ${{ runner.os }}-go-build-
+
+      - name: Cache Toolchain
+        id: cache-toolchain
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod/golang.org/toolchain
+          key: ${{ runner.os }}-go-toolchain-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-go-toolchain-
+
+      - name: Install Toolchain
+        if: steps.cache-toolchain.outputs.cache-hit != 'true'
+        run: |
+          go install golang.org/toolchain@latest
       - name: go version
         run: go version
       - name: Run app
