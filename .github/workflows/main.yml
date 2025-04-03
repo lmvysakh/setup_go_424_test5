@@ -1,5 +1,4 @@
-
-name: Test error 4th repo - First workflow
+name: Test error 5th repo - First workflow
 on:
   push:
     branches:
@@ -19,34 +18,14 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: true
           cache: true
-          
-      - name: Cache Go Modules
-        id: cache-go-mod
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/go/pkg/mod
-          # Exclude the toolchain directory from caching
-          exclude: |
-            ~/go/pkg/mod/golang.org/toolchain
-          key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-mod-
 
-      - name: Cache Go Build
-        id: cache-go-build
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-build-${{ hashFiles('**/*.go') }}
-          restore-keys: |
-            ${{ runner.os }}-go-build-
+      - name: Set permissions
+        run: sudo chmod -R 777 /home/runner/go/pkg/mod
 
-      - name: Setup Toolchain
+      - name: Pre-clean cache directory
         run: |
-          go install golang.org/toolchain@latest
-
+          rm -rf /home/runner/go/pkg/mod
+          rm -rf /home/runner/.cache/go-build
       - name: go version
         run: go version
       - name: Run app
