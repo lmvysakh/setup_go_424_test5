@@ -17,7 +17,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
           check-latest: true
-          cache: true
+          cache: false
 
       # - name: Set permissions
       #   run: sudo chmod -R 777 /home/runner/go/pkg/mod
