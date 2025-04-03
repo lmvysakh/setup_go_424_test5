@@ -18,6 +18,14 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: true
           cache: true
+      - name: Cache Go modules
+        id: cache-modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ${GOPATH}/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ github.run_id }}
       - name: go version
         run: go version
       - name: Run app
