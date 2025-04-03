@@ -12,12 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version-file: 'go.mod'
-          check-latest: true
-          cache: true
 
       - name: Set permissions
         run: sudo chmod -R 777 /home/runner/go/pkg/mod
@@ -26,6 +20,14 @@ jobs:
         run: |
           rm -rf /home/runner/go/pkg/mod
           rm -rf /home/runner/.cache/go-build
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: 'go.mod'
+          check-latest: true
+          cache: true
+
+     
       - name: go version
         run: go version
       - name: Run app
