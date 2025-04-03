@@ -18,6 +18,10 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: true
           cache: true
+
+      - name: Set permissions
+        run: sudo chmod -R 777 /home/runner/go/pkg/mod
+
       - name: Pre-clean cache directory
         run: |
           rm -rf /home/runner/go/pkg/mod
