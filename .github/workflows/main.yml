@@ -1,24 +1,26 @@
-name: Test error 4th repo - First workflow
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-  workflow_dispatch:
-
-jobs:
-  setup-go:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Go
-        uses: actions/setup-go@v4
+    - name: Cache Go Modules
+        id: cache-go-mod
+        uses: actions/cache@v2
         with:
-          go-version-file: 'go.mod'
-          check-latest: true
-          cache: true
-      - name: go version
-        run: go version
-      - name: Run app
-        run: go run ./main.go
+          path: |
+            ~/go/pkg/mod
+          # Exclude the toolchain directory from caching
+          exclude: |
+            ~/go/pkg/mod/golang.org/toolchain
+          key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-mod-
+
+      - name: Cache Go Build
+        id: cache-go-build
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-build-${{ hashFiles('**/*.go') }}
+          restore-keys: |
+            ${{ runner.os }}-go-build-
+
+      - name: Setup Toolchain
+        run: |
+          go install golang.org/toolchain@latest
