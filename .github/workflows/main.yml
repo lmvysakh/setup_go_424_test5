@@ -1,4 +1,4 @@
-name: Test error 5th repo - First workflow
+name: Test error 4th repo - First workflow
 on:
   push:
     branches:
@@ -18,14 +18,6 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: true
           cache: true
-
-      # - name: Set permissions 
-      #   run: sudo chmod -R 777 /home/runner/go/pkg/mod
-
-      # - name: Pre-clean cache directory
-      #   run: |
-      #     rm -rf /home/runner/go/pkg/mod
-      #     rm -rf /home/runner/.cache/go-build
       - name: go version
         run: go version
       - name: Run app
