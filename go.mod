@@ -21,8 +21,15 @@
 
 //******************************************
 
+//module example.com/m
+
+//go 1.22.2
+
+//toolchain go1.21.3
+
+
 module example.com/m
 
-go 1.22.2
+go 1.21.6
 
-toolchain go1.21.3
+toolchain go1.21.1
